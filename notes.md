@@ -63,3 +63,6 @@ function publishList(): void {
     }
 }
 ```
+
+<img onclick="editEntry()" class="edit" src="./img/edit.png" alt="Atnaujinti">
+onclick - atributas leidzia paspaudus ant jo nurodome lementamas iskviesti funkcija

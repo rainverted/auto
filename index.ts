@@ -10,8 +10,8 @@ const UI = {
 } 
 
 enum FuelType {
-    Diesel,
-    Petrol,
+    Dyzelinas,
+    Benzinas,
 }
 
 //sukuriame klase ir reikaimus atributus
@@ -34,18 +34,22 @@ class Car {
     } 
 
     public printData(element:HTMLElement): void {
+     let dateNoTime = '12/12/1020 12:00:00 AM';; 
+		dateNoTime = dateNoTime.split(' ')[0];
+
         if (element) {
             element.innerHTML +=`
                 <div class="entry">
                     <div class="entry_parameter">${this.model}</div>
-                    <div class="entry_parameter">${this.date}</div>
+                    <div class="entry_parameter">${dateNoTime}</div>
                     <div class="entry_parameter">${this.color}</div>
-                    <div class="entry_parameter">${this.fuel}</div>
+                    <div class="entry_parameter">${FuelType[this.fuel]}</div>                      
                     <div class="actions">
-                        <img onclick="editEntry()" class="edit" src="./img/edit.png" alt="Atnaujinti">
-                        <img onclick="deleteEntry()" class="delete" src="./img/delete.png" alt="Istrinti">
+                        <img onclick="editCar()" class="edit" src="./img/edit.png" alt="Atnaujinti">
+                        <img onclick="deleteCar()" class="delete" src="./img/delete.png" alt="Istrinti">
                     </div>
                 </div>`
+        }
     }
 }
 
@@ -57,8 +61,8 @@ UI.addButton?.addEventListener('click', () => {
     const color = UI.colorInput.value;
     const fuel = UI.fuelInput.value;    
 
-    const newCar = new Car(model, date, color, fuel);
-    carList.push(newCar);
+    const car = new Car(model, date, color, fuel);
+    carList.push(car);
 
     publishList();
 });
@@ -69,3 +73,15 @@ function publishList(): void {
         car.printData(UI.carList);
     }
 }
+
+function editCar(): void {
+    console.log(`keicia auto...`);
+    
+}
+
+function deleteCar(id: number): void {
+    console.log(`trina auto...`);
+
+    
+}
+
