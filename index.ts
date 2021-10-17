@@ -4,10 +4,20 @@ const UI = {
     colorInput: document.getElementById("color") as HTMLInputElement,
     fuelInput: document.getElementById("fuel") as HTMLInputElement,
 
-    addButton: document.getElementById("add") as HTMLInputElement,
+    addButton: document.getElementById("add") as HTMLElement,
+    updButton: document.getElementById("update") as HTMLElement,
 
     carList: document.getElementById("list") as HTMLInputElement,
-} 
+}
+
+const newUI = {
+    modelUpdateInput : document.getElementById("updateModel") as HTMLInputElement,
+    dateUpdateInput : document.getElementById("updateDate") as HTMLInputElement,
+    colorUpdateInput : document.getElementById("updateColor") as HTMLInputElement,
+    fuelUpdateInput : document.getElementById("updateFuel") as HTMLInputElement,
+}
+
+let updateCar: Car; //atnaujinamo automobilio objektas
 
 enum FuelType {
     Dyzelinas,
@@ -16,11 +26,12 @@ enum FuelType {
 
 //sukuriame klase ir reikaimus atributus
 class Car {
-    public readonly model: string;
-    public readonly date: Date;
-    public readonly color: string;
+    public model: string;
+    public date: Date;
+    public color: string;
     // fuel at. priskiriame sukurta Enum tipa
-    public readonly fuel: FuelType;
+    public fuel: FuelType;
+    public id: number;
 
     public constructor (model: string,
                         date: string, 
@@ -30,7 +41,9 @@ class Car {
         this.model = model;
         this.date = new Date(date); 
         this.color = color;
-        this.fuel = +fuel;   
+        this.fuel = +fuel;
+        //random id atsitiktiniam automobiliui
+        this.id = Math.round(Math.random() *1000);  
     } 
 
     public printData(element:HTMLElement): void {
@@ -45,15 +58,15 @@ class Car {
                     <div class="entry_parameter">${this.color}</div>
                     <div class="entry_parameter">${FuelType[this.fuel]}</div>                      
                     <div class="actions">
-                        <img onclick="editCar()" class="edit" src="./img/edit.png" alt="Atnaujinti">
-                        <img onclick="deleteCar()" class="delete" src="./img/delete.png" alt="Istrinti">
+                        <img onclick="editCar(${this.id})" class="edit" src="./img/edit.png" alt="Atnaujinti">
+                        <img onclick="deleteCar(${this.id})" class="delete" src="./img/delete.png" alt="Istrinti">
                     </div>
                 </div>`
         }
     }
 }
 
-const carList: Car[] = [];
+let carList: Car[] = [];
 
 UI.addButton?.addEventListener('click', () => {
     const model = UI.modelInput.value;
@@ -74,14 +87,37 @@ function publishList(): void {
     }
 }
 
-function editCar(): void {
-    console.log(`keicia auto...`);
-    
+//paspaudus edit ikona suranda objekta, kuri norime atnaujinti 
+function editCar(id: number): void {
+   for (const car of carList) {
+       if (id === car.id) {
+           updateCar = car; 
+       }
+   }
+   console.log(updateCar);  
+    updateEntry();
+
+    UI.addButton.classList.remove("hide");
+    UI.updButton.classList.add("hide");
 }
 
-function deleteCar(id: number): void {
-    console.log(`trina auto...`);
-
-    
+function updateEntry() {
+    newUI.modelUpdateInput.value = updateCar.model;
+    newUI.dateUpdateInput.value = updateCar.date.toISOString().slice(0, 10);
+    newUI.colorUpdateInput.value = updateCar.color;
+    newUI.fuelUpdateInput.value = updateCar.fuel.toString();
 }
+
+function onSave() {
+    updateCar.model = newUI.modelUpdateInput.value;
+    updateCar.date = new Date(newUI.dateUpdateInput.value);
+    updateCar.color = newUI.colorUpdateInput.value;
+    updateCar.fuel = + newUI.fuelUpdateInput.value;
+
+    UI.addButton.classList.remove("hide");
+    UI.updButton.classList.add("hide");
+
+    publishList();
+}
+
 

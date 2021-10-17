@@ -5,32 +5,48 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Masinos</title>
+    <title>Auto plius</title>
     <link rel="stylesheet" href="reset.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" type="">
     <script src="./index.js" defer></script>
 </head>
 
 <body>
 
     <div class="left_clm">
+
         <div class="form" id="add_car">
             <form>
                 <input id="model" type="text" placeholder="Modelis">
                 <input id="date" type="date" placeholder="Pagaminimo data">
                 <input id="color" type="text" placeholder="Spalva">
-                <select name="fuel" id="fuel">
-                    <option value="" disabled selected>Kuro tipas</option>
-                    <option value="0">Diesel</option>
-                    <option value="1">Petrol</option>
+                <select name="Kuro tipas" id="fuel">
+                    <option value="" disabled selected hidden>Pasirinkite tipą</option>
+                    <option value="0">Dyzelinas</option>
+                    <option value="1">Benzinas</option>
                 </select>
                 <button id="add" type="button">Prideti</button>
-                <button id="update" type="button">Atnaujinti</button>
             </form>
         </div>
+
+        <div class="form hide" id="update_car">
+            <form>
+                <input id="model" type="text" placeholder="Modelis">
+                <input id="date" type="date" placeholder="Pagaminimo data">
+                <input id="color" type="text" placeholder="Spalva">
+                <select name="Kuro tipas" id="fuel">
+                    <option value="" disabled selected hidden>Pasirinkite tipą</option>
+                    <option value="0">Dyzelinas</option>
+                    <option value="1">Benzinas</option>
+                </select>
+                <button class="update" type="button">Atnaujinti</button>
+            </form>
+        </div>
+
     </div>
 
     <div class="right_clm">
+
         <div class="filters">
             <button type="button">Visi automobiliai</button>
             <button type="button">Dyzeliniai automobiliai</button>
@@ -44,8 +60,8 @@
             <h2>Kuro tipas</h2>
             <div class="actions">
             </div>
-
         </div>
+
         <div id="list">
         </div>
 
